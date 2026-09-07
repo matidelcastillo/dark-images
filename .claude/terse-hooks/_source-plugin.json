@@ -1,0 +1,65 @@
+{
+  "name": "terse",
+  "version": "1.1.1",
+  "description": "Enforces concise responses, ultra-minimal code comments, and tight markdown docs. Escalating verbosity correction, write-time rejection of noise, and a background whole-file comment scan.",
+  "author": {
+    "name": "Samuel Hurley",
+    "url": "https://github.com/HurleySk"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/HurleySk/terse",
+  "repository": "https://github.com/HurleySk/terse",
+  "keywords": [
+    "concise",
+    "verbosity",
+    "comments",
+    "markdown",
+    "style",
+    "hooks",
+    "claude-code"
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.js\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/prompt-submit.js\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^(Write|Edit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pre-write.js\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(Write|Edit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/post-write.js\""
+          }
+        ]
+      }
+    ]
+  }
+}

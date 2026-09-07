@@ -1,0 +1,60 @@
+{
+  "outputStyle": "Concise+",
+  "env": {
+    "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "0"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/terse-hooks/session-start.js\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/terse-hooks/prompt-submit.js\""
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/terse-hooks/pre-write.js\""
+          }
+        ],
+        "matcher": "Write|Edit"
+      },
+      {
+        "matcher": "Task|Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/terse-hooks/pre-agent.js\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/terse-hooks/post-write.js\""
+          }
+        ],
+        "matcher": "Write|Edit"
+      }
+    ]
+  }
+}
